@@ -86,7 +86,7 @@ def classic_card_from_number(nb_str,color):
 
 	return valeur
 
-def font_from_number(nb_str):  # TODO = couleur + modulaire (facile à choisir) (dictionnaire, ou variable de classe ? )
+def font_from_number(nb_str,print_flag = False):  # TODO = couleur + modulaire (facile à choisir) (dictionnaire, ou variable de classe ? )
 	if nb_str[1] == '0' or nb_str[1] == '1' :
 		font_color = (0,0,0) # NOIR
 		color = "pic"
@@ -102,9 +102,13 @@ def font_from_number(nb_str):  # TODO = couleur + modulaire (facile à choisir) 
 	elif nb_str[1] == '8' or  nb_str[1] == '9' :
 		font_color = (128,0,128) # VIOLET
 		color = "atout"
+
+	if print_flag :
+		print("Numero " + nb_str + " associé à la couleur " + color + " de valeur " + str(font_color))
+
 	return font_color,color
 
-def create_card(png_file,font_file,number): # Créer un classe carte
+def create_card(png_file,font_file,number,print_flag = False): # Créer un classe carte
 
 	card_size = 1000 # arbitraire, à mettre en argument ?
 	FontSize = 90
@@ -126,7 +130,7 @@ def create_card(png_file,font_file,number): # Créer un classe carte
 	# nb_str = list(nb_str)
 	nb_str = number
 
-	font_color,color = font_from_number(nb_str)
+	font_color,color = font_from_number(nb_str,print_flag = print_flag)
 	valeur = classic_card_from_number(nb_str,color)
 
 	draw = ImageDraw.Draw(img)	# Ajout du nombre

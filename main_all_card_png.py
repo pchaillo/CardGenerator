@@ -7,7 +7,7 @@ from reportlab.lib.units import inch, cm
 source_folder = 'source'
 destination_folder = "cartes"
 liste = os.listdir('./' + source_folder)
-back_card = './source/back.png'
+back_card = './symbol/back.png'
 
 # GENERATE_CARDS = True
 
@@ -41,15 +41,19 @@ for i in liste : # ici, tout dépend du numéro = bonne chose ?
 	if ind_ligne > 3 :
 		ind_colonne += 1
 		ind_ligne = 0
-	c.drawImage(card_name, ind_ligne*5*cm, ind_colonne*5*cm, 5*cm, 5*cm)
-	# c.showPage()
-	ind_ligne += 1
 
 	if ind_colonne > 4 :
 		c.showPage()
 		fill_page(page = c ,back_card=back_card)
 		c.showPage()
 		ind_colonne = 0
-	
+
+	c.drawImage(card_name, ind_ligne*5*cm, ind_colonne*5*cm, 5*cm, 5*cm)
+	# c.showPage()
+	ind_ligne += 1
+
+c.showPage() # On ajoute la dernière page de dos
+fill_page(page = c ,back_card=back_card)
+c.showPage()	
 c.save()
 print("PDF saved")
