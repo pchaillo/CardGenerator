@@ -11,11 +11,12 @@ back_card = './symbol/back.png'
 
 # GENERATE_CARDS = True
 
-c = canvas.Canvas('page.pdf')
+c = canvas.Canvas('All_Cards.pdf')
 
 ind_ligne = 0
 ind_colonne = 0
 
+game_config = PTC.Gamadar()
 
 def fill_page(page,back_card): # mauvaise factorisation du code = faire un truc + propre
 	ind_ligne = 0
@@ -31,7 +32,7 @@ def fill_page(page,back_card): # mauvaise factorisation du code = faire un truc 
 
 for i in liste : # ici, tout dépend du numéro = bonne chose ?
 	number = i[0:2]
-	img = PTC.create_card(png_file = './' + source_folder + '/' + i ,font_file = 'Waredosk.otf',number = number)
+	img = PTC.create_card(png_file = './' + source_folder + '/' + i ,font_file = 'Waredosk.otf',number = number,game_config=game_config)
 	card_name = './' + destination_folder + '/' +  number + '.png'
 	img.save(card_name)
 	print("Carte n° " + str(number) + " générée")

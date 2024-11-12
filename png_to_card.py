@@ -3,7 +3,14 @@ from PIL import ImageFont
 from PIL import ImageDraw
 import numpy as np
 
-def add_type(draw, nb_str,font,font_color):
+class Gamadar:
+	"""
+	Classe qui contient toutes les variables et spécificités selectionnables des jeux
+	"""
+	def __init__(self, FAMANARU = True):
+		self.FAMANARU = FAMANARU
+
+def add_type(draw, nb_str,font,font_color): # Faire des types modulaires + basé sur les numéros c'est le top ?
 	if nb_str[0] == '0':
 		txt = "TROU NOIR"
 	if nb_str[0] == '1':
@@ -44,10 +51,38 @@ def add_classic_symbol( classic_nb,font,img,classic_pos,symbol_size,font_color,c
 		symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
 		symbol_img = symbol_img.convert("RGBA")
 		img = img.convert("RGBA")
-		img.alpha_composite(symbol_img, dest=(60, classic_pos))
+		# x_pos = int(50 + symbol_size/2)
+		img.alpha_composite(symbol_img, dest=(50, classic_pos + 25 - int(symbol_size/2) ) ) # Petit rectificatif pour que ça reste centré quelquesoit la taille du symbole
+		draw = ImageDraw.Draw(img)	
+		draw.text((20 , classic_pos),str(classic_nb),font_color,font=font) # numéro carte classique
 
-	draw = ImageDraw.Draw(img)	
-	draw.text((20 , classic_pos),str(classic_nb),font_color,font=font) # numéro carte classique
+	return img
+
+def add_famanaru_symbol(nb_str,img,symbol_size,classic_pos):
+	no_symbol = False
+	if nb_str[0] == '2': # des fonctions avec des suites de if c'est pas élégant = au moins factoriser en une fonction abstractable
+		symbol_img = Image.open("./symbol/inversion.png")
+	if nb_str[0] == '0':
+		symbol_img = Image.open("./symbol/trou_noir_0_voisins.png")
+	if nb_str[0] == '1':
+		symbol_img = Image.open("./symbol/jumeaux_ligne.png")
+	if nb_str[0] == '4':
+		symbol_img = Image.open("./symbol/loups_ligne.png")
+	if nb_str[0] == '4':
+		symbol_img = Image.open("./symbol/loups_ligne.png")
+	if nb_str[0] == '8':
+		symbol_img = Image.open("./symbol/troll_no_voisin.png")
+	if nb_str[0] == '6':
+		symbol_img = Image.open("./symbol/dragon_superpos.png")
+	else :
+		no_symbol = True
+
+	if no_symbol == False : 
+		symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
+		symbol_img = symbol_img.convert("RGBA")
+		img = img.convert("RGBA")
+		img.alpha_composite(symbol_img, dest=(500, classic_pos + 25 - int(symbol_size/2) )) # en bas au milieu
+		draw = ImageDraw.Draw(img)	
 
 	return img
 
@@ -108,16 +143,16 @@ def font_from_number(nb_str,print_flag = False):  # TODO = couleur + modulaire (
 
 	return font_color,color
 
-def create_card(png_file,font_file,number,print_flag = False): # Créer un classe carte
+def create_card(png_file,font_file,number,game_config,print_flag = False): # Créer un classe carte, avec ces caractéristiques (plus propre et moins d'arguments)
 
 	card_size = 1000 # arbitraire, à mettre en argument ?
 	FontSize = 90
 	BigFontSize = 150
 
-	symbol_size = 50 
+	symbol_size = 75 
 
 	classic_nb = 5 # Avec 11 = valet, 12 = cavalier, 13 = dame, 14 = roi et 1 = AS
-	classic_pos = 930 # nombre de pixel de décalage vers le bas
+	classic_pos = 930 # nombre de pixel de décalage vers le bas, pour accéder la position de la ligne du bas, celle ou le symbole de carte classsique sera posé (nom de variable nul)
 
 	classicFont = ImageFont.truetype(font_file, 60, encoding='utf-8') # Charge les polices aux bonnes tailles
 	myFont = ImageFont.truetype(font_file, FontSize, encoding='utf-8') # Charge les polices aux bonnes tailles
@@ -140,6 +175,9 @@ def create_card(png_file,font_file,number,print_flag = False): # Créer un class
 	add_type(draw, nb_str,myFont,font_color = font_color)
 	img = add_classic_symbol(classic_nb=valeur,img=img,classic_pos=classic_pos,color = color,font = classicFont,symbol_size=symbol_size,font_color = font_color)
 
+	if game_config.FAMANARU :
+		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos)
+
 	img = img.rotate(180)
 	draw = ImageDraw.Draw(img)	
 	draw.text((20, 20),nb_str[0],font_color,font=myBigFont)
@@ -152,7 +190,8 @@ def create_card(png_file,font_file,number,print_flag = False): # Créer un class
 
 
 if __name__ == '__main__':
-	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '68')
+	game_config = Gamadar()
+	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '22',game_config=game_config)
 	img.save('carte_temoin.png')
 	print("Card Created")
 
