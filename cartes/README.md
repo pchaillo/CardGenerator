@@ -1,0 +1,1 @@
+Ce dossier va contenir toutes les cartes dans le même dossier.

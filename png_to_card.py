@@ -86,21 +86,21 @@ def classic_card_from_number(nb_str,color):
 
 	return valeur
 
-def font_from_number(nb_str):
+def font_from_number(nb_str):  # TODO = couleur + modulaire (facile à choisir) (dictionnaire, ou variable de classe ? )
 	if nb_str[1] == '0' or nb_str[1] == '1' :
-		font_color = (0,0,0)
+		font_color = (0,0,0) # NOIR
 		color = "pic"
 	elif nb_str[1] == '2' or nb_str[1] == '3' :
-		font_color = (0,250,0)
+		font_color = (0,153,0) # VERT
 		color = "trefle"
 	elif nb_str[1] == '4' or nb_str[1] == '5' :
-		font_color = (0,0,250)
+		font_color = (51,153,250) # BLUE
 		color = "carreau"
 	elif nb_str[1] == '6' or nb_str[1] == '7' :
-		font_color = (250,0,0)
+		font_color = (204,0,0) # ROUGE
 		color = "coeur"
 	elif nb_str[1] == '8' or  nb_str[1] == '9' :
-		font_color = (128,0,128)
+		font_color = (128,0,128) # VIOLET
 		color = "atout"
 	return font_color,color
 
@@ -149,7 +149,7 @@ def create_card(png_file,font_file,number): # Créer un classe carte
 
 if __name__ == '__main__':
 	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '68')
-	img.save('carte_test_3.png')
+	img.save('carte_temoin.png')
 	print("Card Created")
 
 
