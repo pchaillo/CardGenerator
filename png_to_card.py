@@ -51,18 +51,22 @@ def add_classic_symbol( classic_value,font,img,classic_pos,symbol_size,font_colo
 	elif color == "atout" :
 		no_symbol = True
 
-	if no_symbol == False : 
+	if no_symbol == False and classic_value != '21' : 
 		symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
 		symbol_img = symbol_img.convert("RGBA")
 		img = img.convert("RGBA")
 		# x_pos = int(50 + symbol_size/2)
 		img.alpha_composite(symbol_img, dest=(50, classic_pos + 25 - int(symbol_size/2) ) ) # Petit rectificatif pour que ça reste centré quelquesoit la taille du symbole
-		draw = ImageDraw.Draw(img)	
-		draw.text((20 , classic_pos),classic_value,font_color,font=font) # numéro carte classique
+
+	draw = ImageDraw.Draw(img)	
+	draw.text((20 , classic_pos),classic_value,font_color,font=font) # numéro carte classique
 
 	return img
 
-def classic_card_from_number(nb_str,color,print_flag = True): 
+def classic_card_from_number(nb_str,color,print_flag = False): 
+	"""
+	Calcule la valeur de la carte, compatible avec taror (cavalier + atouts)
+	"""
 	valeur = None
 	unit = int(nb_str[1])
 	if color != "atout" :
@@ -94,6 +98,16 @@ def classic_card_from_number(nb_str,color,print_flag = True):
 		if nb_str[0] == '9':
 			if unit%2 == 0 :
 				valeur = '1'
+			elif unit == 7 :
+				valeur = '21'
+	else :
+		if unit == 9:
+			base = 10
+		else :
+			base = 0
+
+		valeur = str(base + 1 + int(nb_str[0]))
+
 
 	if print_flag :
 		print("Valeur " + str(valeur) + " associées au numéro " + nb_str)
@@ -190,7 +204,7 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 			img = add_classic_symbol(classic_value=valeur,img=img,classic_pos=classic_pos,color = color,font = classicFont,symbol_size=symbol_size,font_color = font_color)
 
 	if game_config.FAMANARU :
-		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=True)
+		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=print_flag)
 
 	img = img.rotate(180) # rotation pour placer l'autre texte 
 	draw = ImageDraw.Draw(img)	
@@ -206,7 +220,7 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 
 if __name__ == '__main__':
 	game_config = Gamadar()
-	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '62',game_config=game_config)
+	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '97',game_config=game_config)
 	img.save('carte_temoin.png')
 	print("Card Created")
 
