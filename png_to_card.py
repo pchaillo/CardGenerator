@@ -38,6 +38,15 @@ def add_type(draw, nb_str,font,font_color,BOLD = True): # Faire des types modula
 	else :
 		draw.text(((1000-w)/2, 20),txt,font_color,font=font)
 
+def add_fight_power( classic_value,font,img,classic_pos,symbol_size,font_color,color = "pic"):
+	symbol_img = Image.open("./symbol/fight.jpg")
+	symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
+	symbol_img = symbol_img.convert("RGBA")
+	img = img.convert("RGBA")
+	img.alpha_composite(symbol_img, dest=(50, classic_pos + 25 - int(symbol_size/2) ) ) # Petit rectificatif pour que √ßa reste centr√© quelquesoit la taille du symbole
+
+	return img
+
 def add_classic_symbol( classic_value,font,img,classic_pos,symbol_size,font_color,color = "pic"):
 	no_symbol = False
 	if color == "pic":
@@ -168,6 +177,12 @@ def font_from_number(nb_str,print_flag = False):  # TODO = couleur + modulaire (
 
 	return font_color,color
 
+def add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize):
+	draw = ImageDraw.Draw(img)	# Ajout du nombre
+	draw.text((20, 20),nb_str[0],font_color,font=myBigFont)
+	draw.text((20 + BigFontSize/2 +5 , 20),nb_str[1],font_color,font=myFont)
+	return draw
+
 def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr√©er un classe carte, avec ces caract√©ristiques (plus propre et moins d'arguments)
 
 	card_size = 1000 # arbitraire, √† mettre en argument ?
@@ -191,10 +206,8 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr√
 	nb_str = number
 
 	font_color,color = font_from_number(nb_str,print_flag = print_flag)
-	
-	draw = ImageDraw.Draw(img)	# Ajout du nombre
-	draw.text((20, 20),nb_str[0],font_color,font=myBigFont)
-	draw.text((20 + BigFontSize/2 +5 , 20),nb_str[1],font_color,font=myFont)
+
+	draw = add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
 
 	add_type(draw, nb_str,myFont,font_color = font_color)
 
@@ -207,9 +220,7 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr√
 		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=print_flag)
 
 	img = img.rotate(180) # rotation pour placer l'autre texte 
-	draw = ImageDraw.Draw(img)	
-	draw.text((20, 20),nb_str[0],font_color,font=myBigFont)
-	draw.text((20 + BigFontSize/2 +5 , 20),nb_str[1],font_color,font=myFont)
+	add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
 	if game_config.CLASSIC_CARDS and valeur != None :
 		img = add_classic_symbol(classic_value=valeur,img=img,classic_pos=classic_pos,color = color,font = classicFont,symbol_size=symbol_size,font_color = font_color)
 
@@ -220,7 +231,7 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr√
 
 if __name__ == '__main__':
 	game_config = Gamadar()
-	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '97',game_config=game_config)
+	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '65',game_config=game_config)
 	img.save('carte_temoin.png')
 	print("Card Created")
 
