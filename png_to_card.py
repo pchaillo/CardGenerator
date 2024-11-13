@@ -38,14 +38,14 @@ def add_type(draw, nb_str,font,font_color,BOLD = True): # Faire des types modula
 	else :
 		draw.text(((1000-w)/2, 20),txt,font_color,font=font)
 
-def add_fight_power( img, symbol_size, power_nb = 5, print_flag = True ):
-	symbol_img = Image.open("./symbol/fight.png")
+def add_icon( img, symbol_size,  file_img, pos_x, nb = 5, print_flag = True ):
+	# symbol_img = Image.open("./symbol/fight.png")file_img
+	symbol_img = Image.open(file_img)
 	symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
 	symbol_img = symbol_img.convert("RGBA")
 	img = img.convert("RGBA")
-	for i in range(power_nb):
-		milieu = power_nb % 2
-		img.alpha_composite(symbol_img, dest=(900, 500 + int(i*symbol_size)))
+	for i in range(nb):
+		img.alpha_composite(symbol_img, dest=(pos_x, 500 + int(i*symbol_size)))
 	if print_flag :
 		print("Carte associée à l'image " + str(symbol_img) )
 
@@ -223,7 +223,8 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 	if game_config.FAMANARU :
 		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=print_flag)
 
-	img = add_fight_power( img, symbol_size )
+	img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/fight.png", nb = 5 )
+	img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/planete.png", nb = 3 )
 
 	img = img.rotate(180) # rotation pour placer l'autre texte 
 	add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
