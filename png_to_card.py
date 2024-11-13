@@ -38,12 +38,16 @@ def add_type(draw, nb_str,font,font_color,BOLD = True): # Faire des types modula
 	else :
 		draw.text(((1000-w)/2, 20),txt,font_color,font=font)
 
-def add_fight_power( classic_value,font,img,classic_pos,symbol_size,font_color,color = "pic"):
-	symbol_img = Image.open("./symbol/fight.jpg")
+def add_fight_power( img, symbol_size, power_nb = 5, print_flag = True ):
+	symbol_img = Image.open("./symbol/fight.png")
 	symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
 	symbol_img = symbol_img.convert("RGBA")
 	img = img.convert("RGBA")
-	img.alpha_composite(symbol_img, dest=(50, classic_pos + 25 - int(symbol_size/2) ) ) # Petit rectificatif pour que ça reste centré quelquesoit la taille du symbole
+	for i in range(power_nb):
+		milieu = power_nb % 2
+		img.alpha_composite(symbol_img, dest=(900, 500 + int(i*symbol_size)))
+	if print_flag :
+		print("Carte associée à l'image " + str(symbol_img) )
 
 	return img
 
@@ -219,6 +223,8 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 	if game_config.FAMANARU :
 		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=print_flag)
 
+	img = add_fight_power( img, symbol_size )
+
 	img = img.rotate(180) # rotation pour placer l'autre texte 
 	add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
 	if game_config.CLASSIC_CARDS and valeur != None :
@@ -231,7 +237,7 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 
 if __name__ == '__main__':
 	game_config = Gamadar()
-	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '65',game_config=game_config)
+	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '22',game_config=game_config)
 	img.save('carte_temoin.png')
 	print("Card Created")
 
