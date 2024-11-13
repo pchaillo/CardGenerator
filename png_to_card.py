@@ -38,14 +38,14 @@ def add_type(draw, nb_str,font,font_color,BOLD = True): # Faire des types modula
 	else :
 		draw.text(((1000-w)/2, 20),txt,font_color,font=font)
 
-def add_icon( img, symbol_size,  file_img, pos_x, nb = 5, print_flag = True ):
+def add_icon( img, symbol_size,  file_img, pos_x, nb = 5, print_flag = False ):
 	# symbol_img = Image.open("./symbol/fight.png")file_img
 	symbol_img = Image.open(file_img)
 	symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
 	symbol_img = symbol_img.convert("RGBA")
 	img = img.convert("RGBA")
 	for i in range(nb):
-		img.alpha_composite(symbol_img, dest=(pos_x, 500 + int(i*symbol_size)))
+		img.alpha_composite(symbol_img, dest=(pos_x, 500 + int( i*(symbol_size+5) ) ) )
 	if print_flag :
 		print("Carte associée à l'image " + str(symbol_img) )
 
@@ -130,27 +130,31 @@ def classic_card_from_number(nb_str,color,print_flag = False):
 def add_famanaru_symbol(nb_str,img,symbol_size,classic_pos,print_flag = False):
 	no_symbol = False
 	if nb_str[0] == '2': # des fonctions avec des suites de if c'est pas élégant = au moins factoriser en une fonction abstractable
-		symbol_img = Image.open("./symbol/inversion.png")
+		symbol_img = Image.open("./symbol/inversion.png") # l'image est rechargée à chaque fois = pas opti !
+		fact = 1
 	elif nb_str[0] == '0':
 		symbol_img = Image.open("./symbol/trou_noir_0_voisins.png")
+		fact = 2
 	elif nb_str[0] == '1':
 		symbol_img = Image.open("./symbol/jumeaux_ligne.png")
+		fact = 2
 	elif nb_str[0] == '4':
 		symbol_img = Image.open("./symbol/loups_ligne.png")
-	elif nb_str[0] == '4':
-		symbol_img = Image.open("./symbol/loups_ligne.png")
+		fact = 2
 	elif nb_str[0] == '7':
 		symbol_img = Image.open("./symbol/troll_no_voisin.png")
+		fact = 2
 	elif nb_str[0] == '6':
 		symbol_img = Image.open("./symbol/dragon_superpos.png")
+		fact = 1
 	else :
 		no_symbol = True
 
 	if no_symbol == False : 
-		symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
+		symbol_img = symbol_img.resize((symbol_size*fact, symbol_size*fact), Image.LANCZOS)
 		symbol_img = symbol_img.convert("RGBA")
 		img = img.convert("RGBA")
-		img.alpha_composite(symbol_img, dest=(500, classic_pos + 25 - int(symbol_size/2) )) # en bas au milieu
+		img.alpha_composite(symbol_img, dest=(500, classic_pos + 25 - int(symbol_size*fact/2) )) # en bas au milieu
 		draw = ImageDraw.Draw(img)	
 
 		if print_flag :
@@ -223,8 +227,20 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 	if game_config.FAMANARU :
 		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=print_flag)
 
-	img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/fight.png", nb = 5 )
-	img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/planete.png", nb = 3 )
+	if color == 'atout':
+		if nb_str[0] == '7' or nb_str[0] == '6' :
+			img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 2)
+		if nb_str[0] == '8' or nb_str[0] == '5' :
+			img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 3)
+		else :
+			img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 1)
+	if nb_str[0] == '7':
+		img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 2)
+	elif nb_str[0] == '8':
+		img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 3)
+	elif nb_str[0] == '9':
+		img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 5)
+
 
 	img = img.rotate(180) # rotation pour placer l'autre texte 
 	add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
