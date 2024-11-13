@@ -58,21 +58,21 @@ def add_classic_symbol( classic_nb,font,img,classic_pos,symbol_size,font_color,c
 
 	return img
 
-def add_famanaru_symbol(nb_str,img,symbol_size,classic_pos):
+def add_famanaru_symbol(nb_str,img,symbol_size,classic_pos,print_flag = False):
 	no_symbol = False
 	if nb_str[0] == '2': # des fonctions avec des suites de if c'est pas élégant = au moins factoriser en une fonction abstractable
 		symbol_img = Image.open("./symbol/inversion.png")
-	if nb_str[0] == '0':
+	elif nb_str[0] == '0':
 		symbol_img = Image.open("./symbol/trou_noir_0_voisins.png")
-	if nb_str[0] == '1':
+	elif nb_str[0] == '1':
 		symbol_img = Image.open("./symbol/jumeaux_ligne.png")
-	if nb_str[0] == '4':
+	elif nb_str[0] == '4':
 		symbol_img = Image.open("./symbol/loups_ligne.png")
-	if nb_str[0] == '4':
+	elif nb_str[0] == '4':
 		symbol_img = Image.open("./symbol/loups_ligne.png")
-	if nb_str[0] == '8':
+	elif nb_str[0] == '7':
 		symbol_img = Image.open("./symbol/troll_no_voisin.png")
-	if nb_str[0] == '6':
+	elif nb_str[0] == '6':
 		symbol_img = Image.open("./symbol/dragon_superpos.png")
 	else :
 		no_symbol = True
@@ -83,6 +83,9 @@ def add_famanaru_symbol(nb_str,img,symbol_size,classic_pos):
 		img = img.convert("RGBA")
 		img.alpha_composite(symbol_img, dest=(500, classic_pos + 25 - int(symbol_size/2) )) # en bas au milieu
 		draw = ImageDraw.Draw(img)	
+
+		if print_flag :
+			print("Numero " + nb_str + " associé à l'image " + str(symbol_img) )
 
 	return img
 
@@ -122,6 +125,7 @@ def classic_card_from_number(nb_str,color):
 	return valeur
 
 def font_from_number(nb_str,print_flag = False):  # TODO = couleur + modulaire (facile à choisir) (dictionnaire, ou variable de classe ? )
+	
 	if nb_str[1] == '0' or nb_str[1] == '1' :
 		font_color = (0,0,0) # NOIR
 		color = "pic"
@@ -176,7 +180,7 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 	img = add_classic_symbol(classic_nb=valeur,img=img,classic_pos=classic_pos,color = color,font = classicFont,symbol_size=symbol_size,font_color = font_color)
 
 	if game_config.FAMANARU :
-		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos)
+		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=True)
 
 	img = img.rotate(180)
 	draw = ImageDraw.Draw(img)	

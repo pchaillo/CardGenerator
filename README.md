@@ -13,4 +13,7 @@
 
 
 # Librairies :
+<!-- - pip3 install pypdf2 -->
 - pip3 install pypdf2
+- sudo apt-get install texlive-latex-base
+
