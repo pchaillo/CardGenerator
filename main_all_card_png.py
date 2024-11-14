@@ -19,7 +19,7 @@ ind_colonne = 0
 game_config = PTC.Gamadar()
 
 taille_carte = 5 
-used_shift = taille_carte+0.2# pour mettre de petite marges entre les cartes
+used_shift = taille_carte+0.3# pour mettre de petite marges entre les cartes
 
 def fill_page(page,back_card,used_shift,taille_carte): # mauvaise factorisation du code = faire un truc + propre
 	ind_ligne = 0
