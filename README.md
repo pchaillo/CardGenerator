@@ -17,3 +17,13 @@
 - pip3 install pypdf2
 - sudo apt-get install texlive-latex-base
 
+## Pdf conversion pour le livret
+
+# Pour mettre le livret en vesion imprimable :
+- sudo apt-get install texlive-extra-utils
+- pdfbook2 --inner-margin=20 Gamadaru_Portrait-1.pdf 
+
+# Pour ajouter la couverture et remettre en place :
+- sudo snap install pdftk
+- pdftk file1.pdf file2.pdf cat output mergedfile.pdf # pour fusionner 2 pdf
+- pdftk Gamadaru_Portrait-1-book.pdf  cat 2-end output outputfile.pdf  # pour selectionner certaines pages

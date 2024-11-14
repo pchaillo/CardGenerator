@@ -7,8 +7,9 @@ class Gamadar:
 	"""
 	Classe qui contient toutes les variables et spécificités selectionnables des jeux =  Configuration du jeu
 	"""
-	def __init__(self, FAMANARU = True, CLASSIC_CARDS = True):
+	def __init__(self, FAMANARU = True, GAMATRON = True, CLASSIC_CARDS = True):
 		self.FAMANARU = FAMANARU
+		self.GAMATRON = GAMATRON
 		self.CLASSIC_CARDS = CLASSIC_CARDS
 
 def add_type(draw, nb_str,font,font_color,BOLD = True): # Faire des types modulaires + basé sur les numéros c'est le top ?
@@ -227,19 +228,20 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 	if game_config.FAMANARU :
 		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=print_flag)
 
-	if color == 'atout':
-		if nb_str[0] == '7' or nb_str[0] == '6' :
-			img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 2)
-		if nb_str[0] == '8' or nb_str[0] == '5' :
-			img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 3)
-		else :
-			img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 1)
-	if nb_str[0] == '7':
-		img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 2)
-	elif nb_str[0] == '8':
-		img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 3)
-	elif nb_str[0] == '9':
-		img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 5)
+	if game_config.GAMATRON :
+		if color == 'atout':
+			if nb_str[0] == '7' or nb_str[0] == '6' :
+				img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 2)
+			if nb_str[0] == '8' or nb_str[0] == '5' :
+				img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 3)
+			else :
+				img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 1)
+		if nb_str[0] == '7':
+			img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 2)
+		elif nb_str[0] == '8':
+			img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 3)
+		elif nb_str[0] == '9':
+			img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 5)
 
 
 	img = img.rotate(180) # rotation pour placer l'autre texte 
