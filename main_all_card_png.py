@@ -4,10 +4,12 @@ import os
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch, cm
 
-source_folder = 'source'
+source_folder = 'source2'
 destination_folder = "cartes"
 liste = os.listdir('./' + source_folder)
 back_card = './symbol/back.png'
+
+NUMBER = False # True = number from card name // False = Random number and card name from png name
 
 # GENERATE_CARDS = True
 
@@ -19,9 +21,11 @@ ind_colonne = 0
 game_config = PTC.Gamadar()
 
 taille_carte = 5 
-used_shift = taille_carte+0.3# pour mettre de petite marges entre les cartes
+shift = 0.3
+used_shift = taille_carte + shift # pour mettre de petite marges entre les cartes
+vertical_shift = taille_carte + shift*2
 
-def fill_page(page,back_card,used_shift,taille_carte): # mauvaise factorisation du code = faire un truc + propre
+def fill_page(page,back_card,used_shift,taille_carte): # mauvaise factorisation du code = faire un truc + propre + Faire quelquechose qui remplit les pages automatiquement en fonction de la taille de la page
 	ind_ligne = 0
 	ind_colonne = 0
 	for i in range(20):
@@ -32,10 +36,20 @@ def fill_page(page,back_card,used_shift,taille_carte): # mauvaise factorisation 
 		ind_ligne += 1
 	return page
 
-
+card_ind = 0
 for i in liste : # ici, tout dépend du numéro = bonne chose ?
-	number = i[0:2]
-	img = PTC.create_card(png_file = './' + source_folder + '/' + i ,font_file = 'Waredosk.otf',number = number,game_config=game_config)
+	if NUMBER :
+		number = i[0:2]
+		img = PTC.create_card(png_file = './' + source_folder + '/' + i ,font_file = 'Waredosk.otf',number = number,game_config=game_config)
+	else :
+		if card_ind < 10 :
+			number = '0' + str(card_ind)
+		else :
+			number = str(card_ind)
+		card_ind += 1
+		img = PTC.create_card(png_file = './' + source_folder + '/' + i ,font_file = 'Waredosk.otf',number = number,game_config=game_config,card_name =i[:-4])
+
+	
 	card_name = './' + destination_folder + '/' +  number + '.png'
 	img.save(card_name)
 	print("Carte n° " + str(number) + " générée")

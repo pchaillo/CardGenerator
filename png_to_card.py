@@ -34,6 +34,7 @@ def add_type(draw, nb_str,font,font_color,BOLD = True): # Faire des types modula
 	if nb_str[0] == '9':
 		txt = "DIEU"
 	_, _, w, h = draw.textbbox((0, 0), txt, font=font)
+
 	if BOLD :
 		draw.text(((1000-w)/2, 20),txt,font_color,font=font,stroke_width=1,stroke_fill=font_color)
 	else :
@@ -65,7 +66,7 @@ def add_classic_symbol( classic_value,font,img,classic_pos,symbol_size,font_colo
 	elif color == "atout" :
 		no_symbol = True
 
-	if no_symbol == False and classic_value != '21' : 
+	if no_symbol == False and classic_value != '21' and classic_value != 'EX' : # Exceptions pour 21 et excuse, ou on ne met pas le symbole de trefle
 		symbol_img = symbol_img.resize((symbol_size, symbol_size), Image.LANCZOS)
 		symbol_img = symbol_img.convert("RGBA")
 		img = img.convert("RGBA")
@@ -73,7 +74,7 @@ def add_classic_symbol( classic_value,font,img,classic_pos,symbol_size,font_colo
 		img.alpha_composite(symbol_img, dest=(50, classic_pos + 25 - int(symbol_size/2) ) ) # Petit rectificatif pour que ça reste centré quelquesoit la taille du symbole
 
 	draw = ImageDraw.Draw(img)	
-	draw.text((20 , classic_pos),classic_value,font_color,font=font) # numéro carte classique
+	draw.text((20 , classic_pos),classic_value,font_color,font=font,stroke_width=1,stroke_fill=font_color) # numéro carte classique
 
 	return img
 
@@ -113,7 +114,9 @@ def classic_card_from_number(nb_str,color,print_flag = False):
 			if unit%2 == 0 :
 				valeur = '1'
 			elif unit == 7 :
-				valeur = '21'
+				valeur = '21' # Carte 97 = 21
+			elif unit == 3 :
+				valeur = 'EX' # Carte 93 = Excuse
 	else :
 		if unit == 9:
 			base = 10
@@ -189,10 +192,13 @@ def font_from_number(nb_str,print_flag = False):  # TODO = couleur + modulaire (
 def add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize):
 	draw = ImageDraw.Draw(img)	# Ajout du nombre
 	draw.text((20, 20),nb_str[0],font_color,font=myBigFont)
-	draw.text((20 + BigFontSize/2 +5 , 20),nb_str[1],font_color,font=myFont)
+	draw.text((20 + BigFontSize/2 + 7 , 20),nb_str[1],font_color,font=myFont)
 	return draw
 
-def create_card(png_file,font_file,number,game_config,print_flag = False): # Créer un classe carte, avec ces caractéristiques (plus propre et moins d'arguments)
+def create_card(png_file,font_file,number,game_config,print_flag = True,card_name = None): # Créer un classe carte, avec ces caractéristiques (plus propre et moins d'arguments)
+
+	if print_flag :
+		print("Begin generation of card number : " + number )
 
 	card_size = 1000 # arbitraire, à mettre en argument ?
 	FontSize = 90
@@ -218,7 +224,11 @@ def create_card(png_file,font_file,number,game_config,print_flag = False): # Cr�
 
 	draw = add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
 
-	add_type(draw, nb_str,myFont,font_color = font_color)
+	if card_name == None :
+		add_type(draw, nb_str,myFont,font_color = font_color)
+	else :
+		_, _, w, h = draw.textbbox((0, 0), card_name, font=myFont)
+		draw.text(((1000-w)/2, 20),card_name,font_color,font=myFont,stroke_width=1,stroke_fill=font_color)
 
 	if game_config.CLASSIC_CARDS :
 		valeur = classic_card_from_number(nb_str,color)
