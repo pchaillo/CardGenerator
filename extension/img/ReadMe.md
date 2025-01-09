@@ -1,0 +1,1 @@
+Mettre ici toutes les images des cartes décrites dans descriptions (celle qui n'ont pas de descriptions ne seront pas utilisées)
