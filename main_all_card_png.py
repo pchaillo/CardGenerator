@@ -10,9 +10,9 @@ destination_folder = "cartes"
 liste = os.listdir('./' + source_folder)
 back_card = './symbol/back.png'
 
-BASE = False
+BASE = True # Avec ou sans la base, pour pouvoir combiner avec les extensions
 NUMBER = True # True = number from card name // False = Random number and card name from png name
-EXTENSION = True
+EXTENSION = False
 
 # GENERATE_CARDS = True
 

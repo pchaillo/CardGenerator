@@ -235,50 +235,51 @@ def create_card(png_file,font_file,number,game_config,print_flag = True,card_nam
 
 	font_color,color = font_from_number(nb_str,print_flag = print_flag)
 
-	if description != None : # carte en dehors de l'extension
-		draw = add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
+	# if description != None : # carte en dehors de l'extension #comment pcq cassant = need to finish extension adding ###descrp
 
-		# txt = "test" # Pour ajouter un sous-titre à la carte
-		# add_sous_titre(draw, txt,font=classicFont,font_color=font_color)
+	draw = add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
 
-		if card_name == None :
-			add_type(draw, nb_str,myFont,font_color = font_color)
-		else :
-			_, _, w, h = draw.textbbox((0, 0), card_name, font=myFont)
-			draw.text(((1000-w)/2, 20),card_name,font_color,font=myFont,stroke_width=1,stroke_fill=font_color)
+	# txt = "test" # Pour ajouter un sous-titre à la carte
+	# add_sous_titre(draw, txt,font=classicFont,font_color=font_color)
 
-		if game_config.CLASSIC_CARDS :
-			valeur = classic_card_from_number(nb_str,color)
-			if valeur != None :
-				img = add_classic_symbol(classic_value=valeur,img=img,classic_pos=classic_pos,color = color,font = classicFont,symbol_size=symbol_size,font_color = font_color)
+	if card_name == None :
+		add_type(draw, nb_str,myFont,font_color = font_color)
+	else :
+		_, _, w, h = draw.textbbox((0, 0), card_name, font=myFont)
+		draw.text(((1000-w)/2, 20),card_name,font_color,font=myFont,stroke_width=1,stroke_fill=font_color)
 
-		if game_config.FAMANARU :
-			img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=print_flag)
-
-		if game_config.GAMATRON :
-			if color == 'atout':
-				if nb_str[0] == '7' or nb_str[0] == '6' :
-					img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 2)
-				if nb_str[0] == '8' or nb_str[0] == '5' :
-					img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 3)
-				else :
-					img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 1)
-			if nb_str[0] == '7':
-				img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 2)
-			elif nb_str[0] == '8':
-				img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 3)
-			elif nb_str[0] == '9':
-				img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 5)
-
-
-		img = img.rotate(180) # rotation pour placer l'autre texte 
-		add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
-		if game_config.CLASSIC_CARDS and valeur != None :
+	if game_config.CLASSIC_CARDS :
+		valeur = classic_card_from_number(nb_str,color)
+		if valeur != None :
 			img = add_classic_symbol(classic_value=valeur,img=img,classic_pos=classic_pos,color = color,font = classicFont,symbol_size=symbol_size,font_color = font_color)
 
-		img = img.rotate(180)
+	if game_config.FAMANARU :
+		img = add_famanaru_symbol(nb_str = nb_str,img = img,symbol_size = symbol_size,classic_pos=classic_pos,print_flag=print_flag)
 
-	# else : # cartes de l'extension
+	if game_config.GAMATRON :
+		if color == 'atout':
+			if nb_str[0] == '7' or nb_str[0] == '6' :
+				img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 2)
+			if nb_str[0] == '8' or nb_str[0] == '5' :
+				img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 3)
+			else :
+				img = add_icon( img, symbol_size,pos_x = 900, file_img = "./symbol/planete.png", nb = 1)
+		if nb_str[0] == '7':
+			img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 2)
+		elif nb_str[0] == '8':
+			img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 3)
+		elif nb_str[0] == '9':
+			img = add_icon( img, symbol_size,pos_x = 10, file_img = "./symbol/fight.png", nb = 5)
+
+
+	img = img.rotate(180) # rotation pour placer l'autre texte 
+	add_99_number(img,nb_str,font_color,myBigFont,myFont,BigFontSize)
+	if game_config.CLASSIC_CARDS and valeur != None :
+		img = add_classic_symbol(classic_value=valeur,img=img,classic_pos=classic_pos,color = color,font = classicFont,symbol_size=symbol_size,font_color = font_color)
+
+	img = img.rotate(180)
+
+	# else : # cartes de l'extension ###descrp
 
 
 	return img
