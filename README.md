@@ -30,8 +30,10 @@
 
 # Règles à ajouter :
 - Memory
-- Coloretto
 - Deck building
 - Munchkin
 - Undercover
-- 
+- Radsland
+
+# Idée :
+Créer une nouvelle ressource ?

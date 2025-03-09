@@ -281,13 +281,14 @@ def create_card(png_file,font_file,number,game_config,print_flag = True,card_nam
 
 	# else : # cartes de l'extension ###descrp
 
-
 	return img
 
 
 if __name__ == '__main__':
 	game_config = Gamadar()
-	img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '22',game_config=game_config)
+	# img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '22',game_config=game_config)
+	# img = create_card(png_file = "purple_drag.png",font_file = 'Waredosk.otf',number = '68',game_config=game_config)
+	img = create_card(png_file = "./cartes/99.png",font_file = 'Waredosk.otf',number = '99',game_config=game_config)
 	img.save('carte_temoin.png')
 	print("Card Created")
 
