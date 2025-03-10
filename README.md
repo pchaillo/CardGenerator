@@ -33,6 +33,7 @@
 - Munchkin
 - Undercover
 - Radsland
+- Combinaison carte Magik / Pokemon/ etc. ? (Ambitieux)
 - etc.
 
 # Idée :
