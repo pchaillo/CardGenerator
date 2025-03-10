@@ -6,6 +6,7 @@
 
 
 # TODO :
+- Faire un dépot Github public clair et propre pour que ça soit réutilisable par tout le monde ! (Important !)
 - Toutes les cartes en automatiques = v1 basé sur le numéro des cartes
 - Un truc qui récupère automatiquement les cartes après le scan d'une feuille = faire facilement sa version en dessinant
 - Lien automatique à Latex pour update livret
