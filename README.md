@@ -29,11 +29,11 @@
 - pdftk Gamadaru_Portrait-1-book.pdf  cat 2-end output outputfile.pdf  # pour selectionner certaines pages
 
 # Règles à ajouter :
-- Memory
 - Deck building
 - Munchkin
 - Undercover
 - Radsland
+- etc.
 
 # Idée :
 Créer une nouvelle ressource ?
