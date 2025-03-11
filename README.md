@@ -44,6 +44,7 @@
 - Les 5 rois
 - Focus
 - Skull King
+- Shadow Hunter
 - Cabanga
 - Kingdomino
 - 7 wonders
@@ -62,3 +63,4 @@
 
 # Idée :
 Créer une nouvelle ressource ?
+Retirer cette DA et ces nom japonais à la con qui rendent tout compliqués ?
