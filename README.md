@@ -32,7 +32,6 @@
 
 # Règles à ajouter :
 - SecretSatan = A FINIR
-- Undercover = Copié Collé à faire
 
 ## Facile 
 A priori pas besoin de modifier les cartes pour ces jeux, juste faire la correspondance (pas toujours si facile que ça) :
