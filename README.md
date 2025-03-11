@@ -31,29 +31,35 @@
 
 # Règles à ajouter :
 - SecretSatan = A FINIR
-- Deck building
-- Munchkin
 - Undercover = Copié Collé à faire
-- Radsland
-- Combinaison carte Magik / Pokemon/ etc. ? (Ambitieux)
+
+## Facile 
+A priori pas besoin de modifier les cartes pour ces jeux, juste faire la correspondance (pas toujours si facile que ça) :
 - The crew
 - Uno
 - Trio
 - Skyjo
 - Dekal
 - Les 5 rois
-- Focus
 - Skull King
-- Shadow Hunter
 - Cabanga
 - Kingdomino
-- 7 wonders
-- Jeu de type carcassone ?
 - Bohnanza
 - Azul
+- Schotten Totten
+
+## Technique
+La y'a du boulot, aussi pour pouvoir combiner avec les jeux de base, mais le jeu en vaut la chandelle : 
+- Deck building
+- Munchkin
+- Radsland
+- Combinaison carte Magik / Pokemon/ etc. ? (Ambitieux)
+- Focus
+- Shadow Hunter
+- 7 wonders
+- Jeu de type carcassone ?
 - Citadelles
 - SubTerra
-- Schotten Totten
 - Oriflamme
 - The Loop
 - Century La Route Des Epices
