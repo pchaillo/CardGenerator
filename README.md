@@ -12,6 +12,7 @@
 - Lien automatique à Latex pour update livret
 - Lien avec IA generative pour génrer des trucs automatiquement*
 - Improve 6 avec des points positifs = modifie l'utilisation du jeu (jouer sur les doubles lecture des symboles dans les différents jeux, si l'agressivité est bonne en competition, elle est défavorable en coopération, etc?)
+- Ajouter QR code repositories sur le livret 
 
 ## Librairies :
 <!-- - pip3 install pypdf2 -->
