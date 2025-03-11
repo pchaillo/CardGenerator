@@ -30,11 +30,34 @@
 - pdftk Gamadaru_Portrait-1-book.pdf  cat 2-end output outputfile.pdf  # pour selectionner certaines pages
 
 # Règles à ajouter :
+- SecretSatan = A FINIR
 - Deck building
 - Munchkin
-- Undercover
+- Undercover = Copié Collé à faire
 - Radsland
 - Combinaison carte Magik / Pokemon/ etc. ? (Ambitieux)
+- The crew
+- Uno
+- Trio
+- Skyjo
+- Dekal
+- Les 5 rois
+- Focus
+- Skull King
+- Cabanga
+- Kingdomino
+- 7 wonders
+- Jeu de type carcassone ?
+- Bohnanza
+- Azul
+- Citadelles
+- SubTerra
+- Schotten Totten
+- Oriflamme
+- The Loop
+- Century La Route Des Epices
+- Bang!
+- Kites
 - etc.
 
 # Idée :
